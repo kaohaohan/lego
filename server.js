@@ -21,7 +21,7 @@ const port = 3001;
 
 app.set("views", __dirname + "/views");
 app.set("view engine", "ejs");
-app.use(express.static("public"));
+app.use(express.static(__dirname + "public"));
 
 // 初始化 LegoSets 模块
 legoSets.initialize();
