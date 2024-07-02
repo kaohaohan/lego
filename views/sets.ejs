@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lego Collection</title>
+    <link href="/css/output.css" rel="stylesheet" />
+  </head>
+  <body tabindex="-1">
+    <!-- 包含导航栏部分视图，并传递当前页面参数 -->
+    <%- include('partials/navbar', {page: '/lego/sets'}) %>
+
+    <div class="container mx-auto mt-8">
+      <div class="hero bg-base-200 rounded-lg p-6">
+        <div class="hero-content text-center">
+          <div>
+            <h1 class="text-5xl font-bold mb-8">Collection</h1>
+            <div class="my-4">
+              <!-- 筛选按钮 -->
+              <a
+                href="/lego/sets?theme=technic"
+                class="btn btn-outline text-white bg-purple-500 hover:bg-purple-700 m-2"
+                >Technic</a
+              >
+              <a
+                href="/lego/sets?theme=Classic Town"
+                class="btn btn-outline text-white bg-purple-500 hover:bg-purple-700 m-2"
+                >Classic Town</a
+              >
+              <a
+                href="/lego/sets?theme=Basic Set"
+                class="btn btn-outline text-white bg-purple-500 hover:bg-purple-700 m-2"
+                >Basic Set</a
+              >
+              <a
+                href="/lego/sets?theme=Early Creator"
+                class="btn btn-outline text-white bg-purple-500 hover:bg-purple-700 m-2"
+                >Early Creator</a
+              >
+            </div>
+
+            <!-- 表格显示 LEGO 集合数据 -->
+            <table class="table-auto w-full">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Name</th>
+                  <th>Theme</th>
+                  <th>Year</th>
+                  <th>Number of Parts</th>
+                  <th>Details</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% sets.forEach(set => { %>
+                <tr>
+                  <td class="px-2">
+                    <div class="avatar">
+                      <div class="w-24 rounded">
+                        <img src="<%= set.img_url %>" alt="<%= set.name %>" />
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-2"><%= set.name %></td>
+                  <td class="px-2">
+                    <a
+                      href="/lego/sets?theme=<%= set.theme %>"
+                      class="btn btn-outline text-white bg-purple-500 hover:bg-purple-700 m-2"
+                      ><%= set.theme %></a
+                    >
+                  </td>
+                  <td class="px-4"><%= set.year %></td>
+                  <td class="px-4"><%= set.num_parts %></td>
+                  <td class="px-2">
+                    <a
+                      href="/lego/sets/<%= set.set_num %>"
+                      class="btn btn-outline text-white bg-purple-500 hover:bg-purple-700 m-2"
+                      >Details</a
+                    >
+                  </td>
+                </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br />
+  </body>
+</html>

@@ -1,0 +1,77 @@
+<div class="container mx-auto">
+  <header class="h-20 bg-white">
+    <nav class="relative px-2 py-4">
+      <div class="container mx-auto flex justify-between items-center">
+        <ul class="hidden md:flex space-x-6">
+          <li><a href="/">Lego Collection</a></li>
+
+          <li class="flex relative group">
+            <a href="#" class="mr-1">Themes</a>
+            <i class="fa-solid fa-chevron-down fa-2xs pt-3"></i>
+            <ul
+              class="absolute bg-white p-3 w-52 top-6 transform scale-0 group-hover:scale-100 transition duration-150 ease-in-out origin-top shadow-lg"
+            >
+              <li class="text-sm hover:bg-slate-100 leading-8">
+                <a href="/lego/sets?theme=Classic Castle">Classic Castle</a>
+              </li>
+              <li class="text-sm hover:bg-slate-100 leading-8">
+                <a href="/lego/sets?theme=Basic Set">Basic Set</a>
+              </li>
+              <li class="text-sm hover:bg-slate-100 leading-8">
+                <a href="/lego/sets?theme=Classic Town">Classic Town</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a class="<%= (page == '/about') ? 'active' : '' %>" href="/about"
+              >About</a
+            >
+          </li>
+        </ul>
+        <button id="mobile-icon" class="md:hidden">
+          <i onclick="changeIcon(this)" class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+
+      <div class="md:hidden flex justify-center mt-3 w-full">
+        <div id="mobile-menu" class="mobile-menu absolute top-23 w-full">
+          <ul class="bg-gray-100 shadow-lg leading-9 font-bold h-screen">
+            <li
+              class="border-b-2 border-white hover:bg-red-400 hover:text-white pl-4"
+            >
+              <a href="/" class="block pl-7">Home</a>
+            </li>
+            <li
+              class="border-b-2 border-white hover:bg-red-400 hover:text-white pl-4"
+            >
+              <a href="/about" class="block pl-7">About</a>
+            </li>
+            <li
+              class="border-b-2 border-white hover:bg-red-400 hover:text-white"
+            >
+              <a href="#" class="block pl-11"
+                >Services<i class="fa-solid fa-chevron-down fa-2xs pt-4"></i
+              ></a>
+              <ul class="bg-white text-gray-800 w-full">
+                <li class="text-sm leading-8 font-normal hover:bg-slate-200">
+                  <a class="block pl-16" href="#">Webdesign</a>
+                </li>
+                <li class="text-sm leading-8 font-normal hover:bg-slate-200">
+                  <a class="block pl-16" href="#">Digital marketing</a>
+                </li>
+                <li class="text-sm leading-8 font-normal hover:bg-slate-200">
+                  <a class="block pl-16" href="#">SEO</a>
+                </li>
+              </ul>
+            </li>
+            <li
+              class="border-b-2 border-white hover:bg-red-400 hover:text-white pl-4"
+            >
+              <a href="#" class="block pl-7">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+</div>

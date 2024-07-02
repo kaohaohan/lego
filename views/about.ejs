@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About</title>
+    <link href="/css/output.css" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-slate-200">
+    <!-- 包含导航栏部分视图 -->
+    <%- include('partials/navbar', {page: '/about'}) %>
+
+    <div class="container mx-auto">
+      <!-- Hero section starts -->
+      <div class="hero bg-slate-200 mt-4 bg-yellow-400">
+        <div class="hero-content text-center">
+          <div class="max-w-md">
+            <h1 class="text-5xl font-bold">About me</h1>
+            <p class="py-6">
+              Here is my web small side project. It is mainly lerning how to use
+              tailwind and use RESTful api to get lego data. Maybe one day I
+              will refine this project.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="container mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
+          <div class="w-full border-2 flex items-center justify-center">
+            <figure>
+              <img
+                src="https://www.indiewire.com/wp-content/uploads/2022/10/Rick-Morty-Season-6-Fire-Eyes.png?w=600&h=337&crop=1"
+                alt="card1"
+              />
+            </figure>
+          </div>
+          <div class="border-2 p-4 flex flex-col justify-center">
+            <h1 class="text-3xl font-bold mb-8 text-center">Hao Han Kao</h1>
+            <div class="pl-10 mt-8">
+              <li>I am a bodybuilder and like technology</li>
+              <li>
+                I am studying Computer Programming and Analysis at Seneca.
+              </li>
+              <li>I am cool and chill.</li>
+              <li>I am a good collegue.</li>
+              <li>I hope I can get a job.</li>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
