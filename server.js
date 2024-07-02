@@ -19,9 +19,8 @@ const path = require("path");
 const app = express();
 const port = 3001;
 
+app.set("views", __dirname + "/views");
 app.set("view engine", "ejs");
-
-// 允许 express 使用 public 文件夹中的静态文件
 app.use(express.static("public"));
 
 // 初始化 LegoSets 模块
