@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Lego Set</title>
+    <link href="/css/output.css" rel="stylesheet" />
+  </head>
+  <body tabindex="-1">
+    <!-- 包含导航栏部分视图，并传递当前页面参数 -->
+    <%- include('partials/navbar', {page: '/lego/addSet'}) %>
+
+    <div class="container mx-auto mt-8">
+      <div class="hero bg-base-200 rounded-lg p-6">
+        <div class="hero-content text-center">
+          <div>
+            <h1 class="text-5xl font-bold mb-8">Add Set</h1>
+            <form action="/lego/addSet" method="POST" class="max-w-xl mx-auto">
+              <div class="mb-4">
+                <label
+                  for="name"
+                  class="block text-lg font-medium text-gray-700"
+                  >Name</label
+                >
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  required
+                  class="input input-bordered w-full"
+                />
+              </div>
+              <div class="mb-4">
+                <label
+                  for="year"
+                  class="block text-lg font-medium text-gray-700"
+                  >Year</label
+                >
+                <input
+                  type="number"
+                  id="year"
+                  name="year"
+                  required
+                  class="input input-bordered w-full"
+                />
+              </div>
+              <div class="mb-4">
+                <label
+                  for="num_parts"
+                  class="block text-lg font-medium text-gray-700"
+                  >Number of Parts</label
+                >
+                <input
+                  type="number"
+                  id="num_parts"
+                  name="num_parts"
+                  required
+                  class="input input-bordered w-full"
+                />
+              </div>
+              <div class="mb-4">
+                <label
+                  for="img_url"
+                  class="block text-lg font-medium text-gray-700"
+                  >Image URL</label
+                >
+                <input
+                  type="url"
+                  id="img_url"
+                  name="img_url"
+                  required
+                  class="input input-bordered w-full"
+                />
+              </div>
+              <div class="mb-4">
+                <label
+                  for="theme_id"
+                  class="block text-lg font-medium text-gray-700"
+                  >Theme</label
+                >
+                <select
+                  id="theme_id"
+                  name="theme_id"
+                  required
+                  class="select select-bordered w-full"
+                >
+                  <% themes.forEach(theme => { %>
+                  <option value="<%= theme.id %>"><%= theme.name %></option>
+                  <% }) %>
+                </select>
+              </div>
+              <div class="mb-4">
+                <label
+                  for="set_num"
+                  class="block text-lg font-medium text-gray-700"
+                  >Set Number</label
+                >
+                <input
+                  type="text"
+                  id="set_num"
+                  name="set_num"
+                  required
+                  class="input input-bordered w-full"
+                />
+              </div>
+              <div>
+                <button type="submit" class="btn btn-primary w-full">
+                  Add Set
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br />
+  </body>
+</html>

@@ -22,7 +22,7 @@
                 alt="<%= set.name %>"
                 class="my-4 w-96 h-auto mx-auto rounded"
               />
-              <p>Theme: <%= set.theme %></p>
+              <p>Theme: <%= set.Theme.name %></p>
               <p>Year: <%= set.year %></p>
               <p>Number of parts: <%= set.num_parts %></p>
               <div id="quote" class="mt-8"></div>
@@ -30,6 +30,13 @@
               <div class="mt-4">
                 <a href="/lego/sets" class="btn btn-outline btn-info"
                   >Back to Collection</a
+                >
+              </div>
+              <div class="mt-4">
+                <a
+                  href="/lego/editSet/<%= set.set_num %>"
+                  class="btn btn-outline btn-info"
+                  >Edit</a
                 >
               </div>
             </div>
