@@ -8,19 +8,28 @@
  *
  *  Name: _________HaoHanKao_____________ Student ID: ________151604220______ Date: ___07/18/2024___________
  *
- *  Published URL: ____________________https://lego-nptz7hkdw-kaohaohans-projects.vercel.app_______________________________________
+ *  Published URL: ____________________https://lego-56ngbu3b4-kaohaohans-projects.vercel.app_______________________________________
  *
  ********************************************************************************/
 
 const express = require("express");
 const legoSets = require("./modules/legoSets");
 const path = require("path");
+require("dotenv").config();
+//8/4
+//Mongo auth service
+const authData = require("./modules/auth-service");
+//8/4
+//Client Session Middleware
+// store user credentials and data
+const clientSessions = require("client-sessions");
+
 //處理表單 table !!!!
 const bodyParser = require("body-parser");
 //
 
 const app = express();
-const port = 3001;
+const port = 3002;
 
 app.use(express.static(`${__dirname}/public`));
 app.set("views", path.join(__dirname) + "/views");
@@ -30,8 +39,33 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// 初始化 LegoSets 模块
-legoSets.initialize();
+// 初始化 LegoSets and authData Module
+legoSets
+  .initialize()
+  .then(authData.initialize)
+  .then(() => {
+    app.listen(port, () => {
+      console.log(`Example app listening on port ${port}`);
+    });
+  })
+  .catch((err) => {
+    console.log(`Unable to start server: ${err}`);
+  });
+
+app.use(
+  clientSessions({
+    cookieName: "session", // this is the object name that will be added to 'req'
+    secret: process.env.SESSIONSECRETE, // this should be a long un-guessable string.
+    duration: 2 * 60 * 1000, // duration of the session in milliseconds (2 minutes)
+    activeDuration: 1000 * 60, // the session will be extended by this many ms each request (1 minute)
+  })
+);
+
+//make sure every module are able to access to a "session" object((ie: {{session.userName}} for example) )
+app.use((req, res, next) => {
+  res.locals.session = req.session;
+  next();
+});
 
 app.get("/", (req, res) => {
   res.render("home"); // 使用 res.render 而不是 res.sendFile
@@ -156,8 +190,4 @@ app.get("/lego/deleteSet/:num", (req, res) => {
 
 app.use((req, res, next) => {
   res.status(404).render("404", { message: "Page not found." });
-});
-
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
 });

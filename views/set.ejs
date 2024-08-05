@@ -15,18 +15,27 @@
         <div class="hero-content text-center">
           <div>
             <h1 class="text-5xl font-bold mb-8">Set Details</h1>
-            <div class="my-4">
+            <div class="">
               <h2 class="text-3xl"><%= set.name %></h2>
               <img
                 src="<%= set.img_url %>"
                 alt="<%= set.name %>"
-                class="my-4 w-96 h-auto mx-auto rounded"
+                class="my-4 w-full h-auto mx-auto rounded"
               />
-              <p>Theme: <%= set.Theme.name %></p>
-              <p>Year: <%= set.year %></p>
-              <p>Number of parts: <%= set.num_parts %></p>
-              <div id="quote" class="mt-8"></div>
-              <div id="author"></div>
+              <div class="prose">
+                <p><strong>Theme:</strong> <%= set.Theme.name %></p>
+
+                <p><strong>Year:</strong> <%= set.year %></p>
+
+                <p><strong>Number of Parts:</strong> <%= set.num_parts %></p>
+
+                <p><strong>Set Number:</strong> <%= set.set_num %></p>
+              </div>
+
+              <div class="bg-white p-2 rounded mt-4 text-xl">
+                <div id="quote" class="quote-content"></div>
+                <div id="author" class="quote-author"></div>
+              </div>
               <div class="mt-4">
                 <a href="/lego/sets" class="btn btn-outline btn-info"
                   >Back to Collection</a
