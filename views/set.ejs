@@ -20,7 +20,7 @@
               <img
                 src="<%= set.img_url %>"
                 alt="<%= set.name %>"
-                class="my-4 w-full h-auto mx-auto rounded"
+                class="my-4 h-auto mx-auto rounded"
               />
               <div class="prose">
                 <p><strong>Theme:</strong> <%= set.Theme.name %></p>
@@ -41,6 +41,8 @@
                   >Back to Collection</a
                 >
               </div>
+
+              <% if(session.user){ %>
               <div class="mt-4">
                 <a
                   href="/lego/editSet/<%= set.set_num %>"
@@ -48,6 +50,7 @@
                   >Edit</a
                 >
               </div>
+              <% } %>
             </div>
           </div>
         </div>

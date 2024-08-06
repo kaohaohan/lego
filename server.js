@@ -63,6 +63,10 @@ app.use(
 
 //make sure every module are able to access to a "session" object((ie: {{session.userName}} for example) )
 app.use((req, res, next) => {
+  //這個sesion是一種token 他會從req裡面拿到
+  //再傳給res.local.session （有點像local storage放資料的地方）
+  //以後我的reponse 都會有一個local session 就是我的 req.session;
+  //以後只要登入之後 request session 就會有這個 session
   res.locals.session = req.session;
   next();
 });
@@ -119,12 +123,13 @@ app.get("/about", (req, res) => {
 //addSet
 // First use legoSets module function get all themes
 // so get themData than give themeData to addSet themes
-app.get("/lego/addSet", (req, res) => {
+app.get("/lego/addSet", ensureLogin, (req, res) => {
   legoSets.getAllThemes().then((themeData) => {
     res.render("addSet", { themes: themeData });
   });
 });
-app.post("/lego/addSet", (req, res) => {
+//post
+app.post("/lego/addSet", ensureLogin, (req, res) => {
   let setData = req.body;
 
   legoSets
@@ -139,7 +144,7 @@ app.post("/lego/addSet", (req, res) => {
     });
 });
 
-app.get("/lego/editSet/:num", (req, res) => {
+app.get("/lego/editSet/:num", ensureLogin, (req, res) => {
   let setNum = req.params.num;
 
   legoSets
@@ -158,7 +163,7 @@ app.get("/lego/editSet/:num", (req, res) => {
     });
 });
 
-app.post("/lego/editSet", (req, res) => {
+app.post("/lego/editSet", ensureLogin, (req, res) => {
   let setData = req.body;
   let setNum = req.body.set_num;
   legoSets
@@ -173,7 +178,7 @@ app.post("/lego/editSet", (req, res) => {
     });
 });
 
-app.get("/lego/deleteSet/:num", (req, res) => {
+app.get("/lego/deleteSet/:num", ensureLogin, (req, res) => {
   let setNum = req.params.num;
 
   legoSets
@@ -188,6 +193,82 @@ app.get("/lego/deleteSet/:num", (req, res) => {
     });
 });
 
-app.use((req, res, next) => {
-  res.status(404).render("404", { message: "Page not found." });
+//8/6
+//login get
+app.get("/login", (req, res) => {
+  res.render("login");
 });
+
+//8/6
+//login post
+app.post("/login", (req, res) => {
+  //把header裡面的user-Agent 放到req.body
+  // user-agent紀錄登入時你的一些系統資訊
+  req.body.userAgent = req.get("User-Agent");
+  authData
+    .checkUser(req.body)
+    .then((user) => {
+      //用authData 去
+      req.session.user = {
+        userName: user.userName, // authenticated user's userName
+        email: user.email, // authenticated user's email
+        loginHistory: user.loginHistory, // authenticated user's loginHistory
+      };
+      res.redirect("/lego/sets");
+    })
+    .catch((err) => {
+      res.render("login", {
+        //這個邏輯是當erroMessage 傳進來就會到我error message 去看login.ejs下面寫的條件
+        // <% if (typeof errorMessage !== 'undefined') { %>...
+        errorMessage: err,
+        userName: req.body.userName,
+      });
+    });
+});
+
+//8/6
+//register get
+app.get("/register", (req, res) => {
+  res.render("register");
+});
+
+//8/6
+//register pst
+app.post("/register", (req, res) => {
+  authData
+    .registerUser(req.body)
+    .then((user) => {
+      res.render("register", { successMessage: "User created" });
+    })
+    .catch((err) => {
+      res.render("register", {
+        errorMessage: err,
+        userName: req.body.userName,
+      });
+    });
+});
+
+//8/6
+app.get("/logout", ensureLogin, (req, res) => {
+  req.session.reset();
+  res.redirect("/");
+});
+
+//8/6
+app.get("/userHistory", ensureLogin, (req, res) => {
+  res.render("userHistory");
+});
+
+app.use((req, res, next) => {
+  res.render("userHistory", { user: req.session.user });
+});
+
+//8/6
+function ensureLogin(req, res, next) {
+  //check req.session.user有沒有東西 只要有login req.session.user 就會有資料
+  if (!req.session.user) {
+    res.redirect("/login");
+  } else {
+    next();
+  }
+}
